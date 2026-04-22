@@ -973,7 +973,7 @@ class plotSkewT(backgroundSkewT):
                     temp_color = self.ens_temp_color
                     dewp_color = self.ens_dewp_color
                     
-                    fstp_color = self.ens_fstc_color
+                    #fstp_color = self.ens_fstc_color
                 else:
                     temp_color = self.background_colors[bg_color_idx]
                     dewp_color = self.background_colors[bg_color_idx]
