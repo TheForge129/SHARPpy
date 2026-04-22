@@ -335,6 +335,8 @@ class BasicProfile(Profile):
         self.hght[self.hght == self.missing] = ma.masked
         self.tmpc[self.tmpc == self.missing] = ma.masked
         self.dwpc[self.dwpc == self.missing] = ma.masked
+        
+        self.fstc = self.get_fstp_profile()
 
         self.logp = np.log10(self.pres.copy())
         self.vtmp = thermo.virtemp( self.pres, self.tmpc, self.dwpc )
@@ -488,6 +490,18 @@ class BasicProfile(Profile):
         rh[rh == self.missing] = ma.masked
         rh.set_fill_value(self.missing)
         return rh
+
+    
+    
+    def get_fstp_profile(self):
+        
+        rh = self.get_rh_profile()
+        T = self.tmpc
+        
+        vp = rh/100 * np.exp((17.62*T)/(243.12+T))
+        fstc = (272.62 * np.log(vp)) / (22.46 - np.log(vp))
+        
+        return fstc
 
 
 class ConvectiveProfile(BasicProfile):

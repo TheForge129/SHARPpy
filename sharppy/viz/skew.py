@@ -387,6 +387,9 @@ class plotSkewT(backgroundSkewT):
         self.eff_layer_color = QtGui.QColor(kwargs.get('eff_layer_color', '#00FFFF'))
         #self.max_lapse_rate_color = QtGui.QColor('#FF6D6D')
         self.background_colors =[ QtGui.QColor(c) for c in kwargs.get('background_colors', ['#6666CC', '#CC9966', '#66CC99']) ]
+        
+        self.fstc_color = QtGui.QColor(kwargs.get('temp_color', '#3F7FFF'))
+        self.ens_fstc_color = QtGui.QColor(kwargs.get('ens_temp_color', '#1F4888'))
 
         self.hgt_color = QtGui.QColor(kwargs.get('hgt_color', '#FF0000'))
         self.dgz_color = QtGui.QColor(kwargs.get('dgz_color', '#F5D800'))
@@ -969,6 +972,8 @@ class plotSkewT(backgroundSkewT):
                 if idx == self.pc_idx:
                     temp_color = self.ens_temp_color
                     dewp_color = self.ens_dewp_color
+                    
+                    fstp_color = self.ens_fstc_color
                 else:
                     temp_color = self.background_colors[bg_color_idx]
                     dewp_color = self.background_colors[bg_color_idx]
@@ -977,6 +982,7 @@ class plotSkewT(backgroundSkewT):
 
                 for profile in proflist:
                     self.drawTrace(profile.tmpc, temp_color, qp, p=profile.pres, width=1)
+                    #self.drawTrace(profile.fstc, fstp_color, qp, p=profile.pres, width=1)
                     self.drawTrace(profile.dwpc, dewp_color, qp, p=profile.pres, width=1)
                     try:
                         self.drawBarbs(profile, qp, color="#666666")
@@ -1028,6 +1034,8 @@ class plotSkewT(backgroundSkewT):
             self.draw_max_lapse_rate_layer(qp)
             self.draw_temp_levels(qp)
 
+        self.drawTrace(profile.fstc, self.fstc_color, qp, width=1.5, label=False)
+
         self.drawTrace(self.dwpc, self.dewp_color, qp, stdev=self.dew_stdev)
 
         for h in [0,1000.,3000.,6000.,9000.,12000.,15000.]:
@@ -1037,6 +1045,8 @@ class plotSkewT(backgroundSkewT):
             self.dpcl_ptrace = self.prof.dpcl_ptrace
             self.drawVirtualParcelTrace(self.pcl.ttrace, self.pcl.ptrace, qp)
             self.drawVirtualParcelTrace(self.dpcl_ttrace, self.dpcl_ptrace, qp, color=QtGui.QColor("#FF00FF"))
+        
+        
 
         if self.plotpbl:
             self.draw_pbl_level(qp)
