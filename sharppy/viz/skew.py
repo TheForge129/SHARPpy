@@ -1005,6 +1005,8 @@ class plotSkewT(backgroundSkewT):
                     logging.debug("Couldn't draw wind barbs in skew.py")
                 bg_color_idx = (bg_color_idx + 1) % len(self.background_colors)
 
+        self.drawTrace(profile.fstc, self.fstc_color, qp, width=1.5, label=False)
+
         self.drawTrace(self.wetbulb, self.wetbulb_color, qp, width=1)
         self.drawTrace(self.tmpc, self.temp_color, qp, stdev=self.tmp_stdev)
         self.drawTrace(self.vtmp, self.temp_color, qp, width=1, style=QtCore.Qt.DashLine, label=False)
@@ -1033,8 +1035,6 @@ class plotSkewT(backgroundSkewT):
             # DRAW THE MAX LAPSE RATE
             self.draw_max_lapse_rate_layer(qp)
             self.draw_temp_levels(qp)
-
-        self.drawTrace(profile.fstc, self.fstc_color, qp, width=1.5, label=False)
 
         self.drawTrace(self.dwpc, self.dewp_color, qp, stdev=self.dew_stdev)
 
